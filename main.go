@@ -2,22 +2,23 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/ikennarichard/essentials/lib"
+	"github.com/ikennarichard/essentials/controllers"
+	"github.com/ikennarichard/essentials/db"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func init() {
-	lib.GetEnvVariables()
+	db.ConnectToDb()
 }
 
 func main() {
-	r := gin.Default()
-	r.ForwardedByClientIP = true
-	r.SetTrustedProxies([]string{"localhost"})
+	router := gin.Default()
+	router.ForwardedByClientIP = true
+	router.SetTrustedProxies([]string{"localhost"})
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run()
+	router.GET("/products", controllers.GetAllProducts)
+	router.POST("/product", controllers.AddProduct)
+	router.GET("/product/:id", controllers.GetProduct)
+
+	router.Run()
 }

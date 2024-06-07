@@ -1,7 +1,6 @@
 *~
 *.exe
 *.log
-
 .env
-/tmp/
-/bin/
+tmp/
+bin/
