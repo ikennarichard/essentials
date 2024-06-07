@@ -51,3 +51,13 @@ func AddProduct(c *gin.Context) {
 	c.JSON(201, product)
 }
 
+func GetProduct(c *gin.Context) {
+	var product models.Product
+	id := c.Param("id")
+
+	if err := lib.DB.First(&product, id).Error; err != nil {
+    c.JSON(404, gin.H{"error": "Employee not found"})
+    return
+	}
+	c.JSON(200, product)
+}

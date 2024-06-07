@@ -16,8 +16,9 @@ func main() {
 	router.ForwardedByClientIP = true
 	router.SetTrustedProxies([]string{"localhost"})
 
-	router.GET("/", controllers.GetAllProducts)
-	router.POST("/", controllers.AddProduct)
+	router.GET("/products", controllers.GetAllProducts)
+	router.POST("/product", controllers.AddProduct)
+	router.GET("/product/:id", controllers.GetProduct)
 
 	router.Run()
 }
