@@ -1,2 +1,7 @@
+*~
+*.exe
+*.log
+
 .env
-/tmp
+/tmp/
+/bin/
