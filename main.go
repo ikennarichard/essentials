@@ -2,8 +2,12 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	_ "github.com/joho/godotenv/autoload"
+	"github.com/ikennarichard/essentials/lib"
 )
+
+func init() {
+	lib.GetEnvVariables()
+}
 
 func main() {
 	r := gin.Default()
