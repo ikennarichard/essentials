@@ -1,24 +1,36 @@
 import './header.sass'
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react'
 
 export default function Header() {
-  const navRef = useRef<HTMLButtonElement>(null!);
+  const [isOpen, setIsOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null!);
 
-  function toggleMenu() {
-    navRef.current.classList.toggle('toggle_nav_menu');
+  const toggleMenu = (event: MouseEvent) => {
+    if (!event.composedPath().includes(headerRef.current) && isOpen) {
+      setIsOpen(false);
+    }
   }
-  
+
+  useEffect(() => {
+    document.addEventListener('click', toggleMenu);
+    return () => {
+      document.removeEventListener('click', toggleMenu);
+    }
+  })
+
   return (
-    <header>
+    <header className='header' ref={headerRef}>
       <div className='logo_container'>
         <h1>essentials</h1>
-        <button className='menu_toggler' onClick={toggleMenu}>
+        <button 
+          className='menu_toggler'
+          onClick={() => setIsOpen(prev => !prev)}>
           <hr />
           <hr />
           <hr />
         </button>
       </div>
-      <nav ref={navRef}>
+      <nav className={isOpen ? 'toggle_nav_menu' : ''}>
         <ul>
           <li><a href="#">Home</a></li>
           <li><a href="#">Shop</a></li>
@@ -26,7 +38,6 @@ export default function Header() {
           <li><a href="#">Contact us</a></li>
         </ul>
       </nav>
-      
     </header>
   )
 }
